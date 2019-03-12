@@ -1,0 +1,94 @@
+::selection {
+  background: #75767d;
+  color: #fff;
+}
+
+html,
+body {
+  font-size: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #f5f7f9;
+  color: #565a5f;
+}
+
+.hide {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#Cursor,
+#Cursor-Stalker {
+  position: fixed;
+  width: 11.111111vh;
+  height: 11.111111vh;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+  z-index: 9980;
+}
+
+#Cursor-Stalker {
+  transition: transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1) -1ms;
+}
+
+.Cursor__default {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #303a3f;
+  border-radius: 50%;
+  transform: scale(0.2);
+}
+
+.Cursor__progressing {
+  display: none;
+}
+
+.Cursor-Stalker__border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 4px solid #0004;
+  border-radius: 50%;
+  transform: scale(0.2);
+}
+
+@font-face {
+  font-family: 'Iropke Batang';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/font/IropkeBatangM.eot);
+  src: url(/assets/font/IropkeBatangM.eot) format('embedded-opentype'),
+    url(/assets/font/IropkeBatangM.woff) format('woff');
+}
+
+#Shell {
+  padding: 10vh 0;
+}
+
+.renewal {
+  font-size: 5vh;
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'Iropke Batang', serif;
+  text-align: center;
+  letter-spacing: 0.2vh;
+  line-height: 1.6em;
+}
