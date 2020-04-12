@@ -207,9 +207,8 @@
         const remainHours = Math.floor((remainDateTimestamp % this._day) / this._hour)
         const remainMinutes = Math.floor((remainDateTimestamp % this._hour) / this._minute)
         const remainSeconds = Math.floor((remainDateTimestamp % this._minute) / this._second)
-        const remainMilliseconds = Math.floor(remainDateTimestamp % this._second)
 
-        this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}.${Number('0.' + String(remainMilliseconds)).toFixed(3).slice(2)}초 남음!`
+        this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
       }
     }
 
