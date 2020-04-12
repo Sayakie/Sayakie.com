@@ -212,6 +212,8 @@
         this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}.${Number('0.' + String(remainMilliseconds)).toFixed(3).slice(2)}초 남음!`
       }
     }
+
+    return new CountDischargeDate()
   })()
 
   return App
