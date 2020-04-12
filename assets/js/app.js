@@ -208,7 +208,9 @@
         const remainMinutes = String(Math.floor((remainDateTimestamp % this._hour) / this._minute)).padStart(2, 0)
         const remainSeconds = String(Math.floor((remainDateTimestamp % this._minute) / this._second)).padStart(2, 0)
 
-        this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
+        const text = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
+        if (this.selector.innerText !== text)
+          this.selector.innerText = text
       }
     }
 
