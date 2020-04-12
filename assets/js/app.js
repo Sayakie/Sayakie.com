@@ -1,5 +1,5 @@
 /**
- * Sayakie.com Application 0.1.0
+ * Sayakie.com Application 0.1.1
  * Author: Sayakie (Kim Ji Min)
  */
 
@@ -182,7 +182,7 @@
     return new Cursor()
   })()
 
-    App.CountDischargeDate = (() => {
+  App.CountDischargeDate = (() => {
     class CountDischargeDate {
       constructor() {
         this.selector = document.querySelector('#DischargeDate-Viewer')
@@ -204,9 +204,9 @@
         }
 
         const remainDays = Math.floor(remainDateTimestamp / this._day)
-        const remainHours = Math.floor((remainDateTimestamp % this._day) / this._hour)
-        const remainMinutes = Math.floor((remainDateTimestamp % this._hour) / this._minute)
-        const remainSeconds = Math.floor((remainDateTimestamp % this._minute) / this._second)
+        const remainHours = String(Math.floor((remainDateTimestamp % this._day) / this._hour)).padStart(2, 0)
+        const remainMinutes = String(Math.floor((remainDateTimestamp % this._hour) / this._minute)).padStart(2, 0)
+        const remainSeconds = String(Math.floor((remainDateTimestamp % this._minute) / this._second)).padStart(2, 0)
 
         this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
       }
