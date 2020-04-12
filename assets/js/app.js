@@ -196,7 +196,7 @@
       }
 
       render = () => {
-        const = remainDateTimestamp = this.dischargeDate - new date()
+        const remainDateTimestamp = this.dischargeDate - new Date()
 
         if (remainDateTimestamp < 0) {
           this.selector.innerText = '전역함!'
