@@ -182,5 +182,37 @@
     return new Cursor()
   })()
 
+  App.CountDischargeDate = (() => {
+    class CountDischargeDate {
+      constructor() {
+        this.selector = document.querySelector('#DischargeDate-Viewer')
+        this.dischargeDate = new date('2021/06/26')
+        this._second = 1000
+        this._minute = _second * 60
+        this._hour = _minute * 60
+        this._day = _hour * 24
+
+        App.RAF.subscribe('raf_count', this.render)
+      }
+
+      render = () => {
+        const = remainDateTimestamp = this.dischargeDate - new date()
+
+        if (remainDateTimestamp < 0) {
+          this.selector.innerText = '전역함!'
+          App.RAF.unsubscribe('raf_count')
+        }
+
+        const remainDays = Math.floor(remainDateTimestamp / _day)
+        const remainHours = Math.floor((remainDateTimestamp % _day) / _hour)
+        const remainMinutes = Math.floor((remainDateTimestamp % _hour) / _minute)
+        const remainSeconds = Math.floor((remainDateTimestamp % _minute) / _second)
+        const remainMilliseconds = Math.floor(remainDateTimestamp % _second)
+
+        this.selector.innerText = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}.${Number('0.' + String(remainMilliseconds)).toFixed(3).slice(2)}초 남음!`
+      }
+    }
+  })()
+
   return App
 })
