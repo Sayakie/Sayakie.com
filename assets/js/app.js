@@ -159,7 +159,6 @@
 
         this.updateStat()
         this.attachEvent()
-        }
       }
 
       handleMouseMove = event => {
