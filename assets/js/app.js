@@ -152,7 +152,6 @@
 
         if (App.isMobile) {
           this.addClass('hide')
-          return
         }
 
         App.body.style.cursor = 'none'
