@@ -36,7 +36,7 @@ body {
   height: 11.111111vh;
   pointer-events: none;
   user-select: none;
-  will-change: transform;
+  touch-action: none;
   z-index: 9980;
 }
 
