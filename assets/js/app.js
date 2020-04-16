@@ -1,6 +1,6 @@
 /**
- * Sayakie.com Application 0.1.1
- * Author: Sayakie (Kim Ji Min)
+ * Sayakie.com Application 0.2.11
+ * Author: Sayakie
  */
 
 // AMD with global, Node, or global
@@ -25,7 +25,7 @@
 })(this, function() {
   // Baseline
   const App = {}
-  App.VERSION = '0.1.0'
+  App.VERSION = '0.2.1'
 
   App.body = document.querySelector('body')
   App.windowWidth = window.innerWidth
@@ -82,7 +82,7 @@
         const subscribers = this.subscribers.length
 
         for (let i = 0; i < subscribers; i++) {
-          this.subscribers[i][0] === f && this.subscribers.splice(l, 1)
+          this.subscribers[i][0] === f && this.subscribers.splice(i, 1)
         }
       }
 
@@ -174,8 +174,7 @@
         const cursorX = this.mouseX - this.cursorXOffset
         const cursorY = this.mouseY - this.cursorYOffset
 
-        this.cursorEl.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`
-        this.cursorStalkerEl.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`
+        this.eachNodes.forEach(node => node.style.transform =  `translate3d(${cursorX}px, ${cursorY}px, 0)`)
       }
     }
 
