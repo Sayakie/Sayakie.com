@@ -25,7 +25,7 @@
 })(this, function() {
   // Baseline
   const App = {}
-  App.VERSION = '0.2.1'
+  App.VERSION = '0.2.11'
 
   App.body = document.querySelector('body')
   App.windowWidth = window.innerWidth
@@ -74,15 +74,23 @@
         }
       }
 
-      subscribe = (f, l) => {
-        this.subscribers.push([f, l])
+      subscribe = (fn, handler) => {
+        this.subscribers.push([fn, handler])
       }
 
-      unsubscribe = f => {
+      unsubscribe = fn => {
         const subscribers = this.subscribers.length
 
         for (let i = 0; i < subscribers; i++) {
-          this.subscribers[i][0] === f && this.subscribers.splice(i, 1)
+          // If identification function name does exist in subscribers,
+          // pop and execute cleanup function to unsubscribe that.
+          if (this.subscribers[i][0] === fn) {
+            const cleanup = this.subscribers[i][1]()
+            this.subscribers.splice(i, 1)
+
+            // Only runs when cleanup function was provided.
+            typeof cleanup === 'function' && cleanup()
+          }
         }
       }
 
@@ -144,12 +152,14 @@
 
         if (App.isMobile) {
           this.addClass('hide')
-        } else {
-          App.body.style.cursor = 'none'
-          App.RAF.subscribe('raf_cursor', this.render)
+          return
+        }
 
-          this.updateStat()
-          this.attachEvent()
+        App.body.style.cursor = 'none'
+        App.RAF.subscribe('raf_cursor', this.render)
+
+        this.updateStat()
+        this.attachEvent()
         }
       }
 
@@ -174,7 +184,16 @@
         const cursorX = this.mouseX - this.cursorXOffset
         const cursorY = this.mouseY - this.cursorYOffset
 
-        this.eachNodes.forEach(node => node.style.transform =  `translate3d(${cursorX}px, ${cursorY}px, 0)`)
+        this.eachNodes.forEach(node => {
+          node.style.display = 'block'
+          node.style.transform =  `translate3d(${cursorX}px, ${cursorY}px, 0px)`
+          node.style.willChanage = 'transform'
+        })
+        
+        return () => this.eachNodes.forEach(node => {
+          node.style.display = 'hide'
+          node.style.willChange = 'auto'
+        })
       }
     }
 
@@ -195,12 +214,13 @@
       }
 
       render = () => {
-        const remainDateTimestamp = this.dischargeDate - new Date()
-
         if (remainDateTimestamp < 0) {
           this.selector.innerText = '전역함!'
           App.RAF.unsubscribe('raf_count')
+          return
         }
+
+        const remainDateTimestamp = this.dischargeDate - new Date()
 
         const remainDays = Math.floor(remainDateTimestamp / this._day)
         const remainHours = String(Math.floor((remainDateTimestamp % this._day) / this._hour)).padStart(2, 0)
@@ -209,7 +229,7 @@
 
         const text = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
         if (this.selector.innerText !== text)
-          this.selector.innerText = text
+            this.selector.innerText = text
       }
     }
 
