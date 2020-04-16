@@ -212,13 +212,13 @@
       }
 
       render = () => {
+        const remainDateTimestamp = this.dischargeDate - new Date()
+
         if (remainDateTimestamp < 0) {
           this.selector.innerText = '전역함!'
           App.RAF.unsubscribe('raf_count')
           return
         }
-
-        const remainDateTimestamp = this.dischargeDate - new Date()
 
         const remainDays = Math.floor(remainDateTimestamp / this._day)
         const remainHours = String(Math.floor((remainDateTimestamp % this._day) / this._hour)).padStart(2, 0)
