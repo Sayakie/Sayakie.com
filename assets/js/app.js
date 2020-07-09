@@ -1,5 +1,5 @@
 /**
- * Sayakie.com Application 0.2.11
+ * Sayakie.com Application 0.2.12
  * Author: Sayakie
  */
 
@@ -74,8 +74,8 @@
         }
       }
 
-      subscribe = (fn, handler) => {
-        this.subscribers.push([fn, handler])
+      subscribe = (fn, handler, cleanup) => {
+        this.subscribers.push([fn, handler, cleanup])
       }
 
       unsubscribe = fn => {
@@ -85,10 +85,10 @@
           // If identification function name does exist in subscribers,
           // pop and execute cleanup function to unsubscribe that.
           if (this.subscribers[i][0] === fn) {
-            const cleanup = this.subscribers[i][1]()
             this.subscribers.splice(i, 1)
 
             // Only runs when cleanup function was provided.
+            const cleanup = this.subscribers[i][1]()
             typeof cleanup === 'function' && cleanup()
           }
         }
@@ -185,12 +185,10 @@
         this.eachNodes.forEach(node => {
           node.style.display = 'block'
           node.style.transform =  `translate3d(${cursorX}px, ${cursorY}px, 0px)`
-          node.style.willChanage = 'transform'
         })
         
         return () => this.eachNodes.forEach(node => {
-          node.style.display = 'hide'
-          node.style.willChange = 'auto'
+          node.style.display = 'none'
         })
       }
     }
@@ -207,6 +205,7 @@
         this._minute = this._second * 60
         this._hour = this._minute * 60
         this._day = this._hour * 24
+        this.preventChanceOnce = false
 
         App.RAF.subscribe('raf_count', this.render)
       }
@@ -214,10 +213,9 @@
       render = () => {
         const remainDateTimestamp = this.dischargeDate - new Date()
 
-        if (remainDateTimestamp < 0) {
-          this.selector.innerText = '전역함!'
+        if (remainDateTimestamp < 0 && !this.preventChanceOnce) {
+          this.preventChanceOnce = !0
           App.RAF.unsubscribe('raf_count')
-          return
         }
 
         const remainDays = Math.floor(remainDateTimestamp / this._day)
@@ -228,6 +226,8 @@
         const text = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
         if (this.selector.innerText !== text)
             this.selector.innerText = text
+
+        return () => this.selector.innerText = '축하해주세요! 전역했습니다 :)'
       }
     }
 
