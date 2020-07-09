@@ -74,8 +74,8 @@
         }
       }
 
-      subscribe = (fn, handler, cleanup) => {
-        this.subscribers.push([fn, handler, cleanup])
+      subscribe = (fn, handler) => {
+        this.subscribers.push([fn, handler])
       }
 
       unsubscribe = fn => {
@@ -85,11 +85,12 @@
           // If identification function name does exist in subscribers,
           // pop and execute cleanup function to unsubscribe that.
           if (this.subscribers[i][0] === fn) {
-            this.subscribers.splice(i, 1)
-
             // Only runs when cleanup function was provided.
             const cleanup = this.subscribers[i][1]()
             typeof cleanup === 'function' && cleanup()
+
+            // Remove from subscribes
+            this.subscribers.splice(i, 1)
           }
         }
       }
