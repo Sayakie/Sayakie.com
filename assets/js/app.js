@@ -246,7 +246,7 @@
         this._day = this._hour * 24
         this.preventChanceOnce = false
 
-        App.RAF.subscribe('raf_count', this.render)
+        App.RAF.subscribe('raf_count2', this.render)
       }
 
       render = () => {
