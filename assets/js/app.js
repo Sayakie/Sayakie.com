@@ -235,5 +235,44 @@
     return new CountDischargeDate()
   })()
 
+  App.CountDischargeDate2 = (() => {
+    class CountDischargeDate2 {
+      constructor() {
+        this.selector = document.querySelector('#DischargeDate-Viewer-2')
+        this.dischargeDate = new Date('2021/01/07')
+        this._second = 1000
+        this._minute = this._second * 60
+        this._hour = this._minute * 60
+        this._day = this._hour * 24
+        this.preventChanceOnce = false
+
+        App.RAF.subscribe('raf_count', this.render)
+      }
+
+      render = () => {
+        const remainDateTimestamp = this.dischargeDate - new Date()
+
+        if (remainDateTimestamp < 0 && !this.preventChanceOnce) {
+          this.preventChanceOnce = !0
+          App.RAF.unsubscribe('raf_count')
+        }
+
+        const remainDays = Math.floor(remainDateTimestamp / this._day)
+        const remainHours = String(Math.floor((remainDateTimestamp % this._day) / this._hour)).padStart(2, 0)
+        const remainMinutes = String(Math.floor((remainDateTimestamp % this._hour) / this._minute)).padStart(2, 0)
+        const remainSeconds = String(Math.floor((remainDateTimestamp % this._minute) / this._second)).padStart(2, 0)
+
+        const text = `전역까지 ${remainDays}일 ${remainHours}시간 ${remainMinutes}분 ${remainSeconds}초 남음!`
+        if (this.selector.innerText !== text)
+            this.selector.innerText = text
+
+        return () => this.selector.innerText = '축하해주세요! 전역했습니다 :)'
+      }
+    }
+
+    return new CountDischargeDate2()
+  })()
+
+
   return App
 })
